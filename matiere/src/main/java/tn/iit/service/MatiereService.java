@@ -23,6 +23,9 @@ public class MatiereService {
 		return matiereRepository.findAll();
 	}
 	
+	public List<Matiere> getMatieresByIdProf(Long idProf){
+		return matiereRepository.findByIdProf(idProf);
+	}
 	public Matiere save(Matiere matiere) {
 		return matiereRepository.save(matiere);
 	}

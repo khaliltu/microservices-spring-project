@@ -29,7 +29,12 @@ public class MatiereController {
 	public List<Matiere> getAll() {
 		return matiereService.getAll();
 	}
-
+	
+	@GetMapping("/profs/id-prof")
+	public List<Matiere> getAllByIdProf(@PathVariable Long idProf){
+		return matiereService.getMatieresByIdProf(idProf);
+	}
+	
 	@GetMapping("/{id}")
 	public Optional<Matiere> getById(@PathVariable Long id) {
 		return matiereService.getById(id);
