@@ -30,9 +30,14 @@ public class MatiereController {
 		return matiereService.getAll();
 	}
 	
-	@GetMapping("/profs/id-prof")
+	@GetMapping("/profs/{idProf}")
 	public List<Matiere> getAllByIdProf(@PathVariable Long idProf){
 		return matiereService.getMatieresByIdProf(idProf);
+	}
+	
+	@GetMapping("/groups/{idGroup}")
+	public List<Matiere> getAllByIdGroup(@PathVariable Long idGroup){
+		return matiereService.getMatieresByIdProf(idGroup);
 	}
 	
 	@GetMapping("/{id}")

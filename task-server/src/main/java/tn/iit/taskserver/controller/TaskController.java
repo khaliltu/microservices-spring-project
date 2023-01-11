@@ -20,6 +20,11 @@ public class TaskController {
     public List<Task> getAll() {
         return taskService.getAll();
     }
+    
+    @GetMapping("/profs/{idProf}")
+    public List<Task> getAllByIdProf(@PathVariable Long idProf) {
+    	return taskService.getAllbyIdProf(idProf);
+    }
 
 
 

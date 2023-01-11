@@ -11,5 +11,6 @@ import tn.iit.entity.Matiere;
 public interface MatiereRepository extends JpaRepository<Matiere, Long>{
 	
 	public List<Matiere> findByIdProf(Long idProf);
+	public List<Matiere> findByIdGroup(Long idGroup);
 
 }
