@@ -1,0 +1,63 @@
+.content {
+  margin-top: 100px;
+  margin-bottom: 10px;
+}
+html {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+body {
+  background-color: transparent !important;
+}
+.right-10 {
+  right: 10px;
+}
+a {
+  font-weight: bold !important;
+  text-transform: none !important;
+}
+a:hover {
+  color: #B04CFE !important;
+}
+tr {
+  cursor: pointer;
+}
+.btn.btn-gastro {
+  color: #fff;
+  background-color: #B04CFE;
+  border-color: #B04CFE;
+}
+.btn.btn-gastro:hover {
+  color: #fff;
+  background-color: #B04CFE;
+  border-color: #B04CFE;
+}
+.css-1nrlq1o-MuiFormControl-root {
+  vertical-align: baseline !important;
+}
+.MuiPaper-root * {
+  font-family: inherit !important;
+  margin-bottom: 0 !important;
+}
+
+.MuiPaper-root .MuiTableFooter-root {
+  margin-bottom: 0 !important;
+}
+.formPage .MuiInputBase-root,
+.formPage .MuiFormControl-root {
+  width: 75%;
+}
+
+.customPagination a {
+  color:  #B04CFE;
+}
+.page-item.active a {
+  background-color: #B04CFE;
+  color: #FFFFFF;
+  border-color: #B04CFE;
+}
+.page-item.active a:hover {
+  background-color: #B04CFE;
+  color: #FFFFFF;
+  border-color: #B04CFE;
+}
