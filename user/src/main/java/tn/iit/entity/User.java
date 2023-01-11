@@ -6,12 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class User {
 
 	@Id
@@ -21,5 +22,6 @@ public class User {
 	private String password;
 	private String name;
 	private String lastName;
+	private Role role;
 	
 }
