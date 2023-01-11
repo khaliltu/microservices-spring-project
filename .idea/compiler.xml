@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="task-server" />
+        <module name="user" />
+        <module name="config" />
+        <module name="eureka-server" />
+        <module name="gateway" />
+        <module name="matiere" />
+        <module name="group" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Task" target="1.8" />
+      <module name="task-erver" target="1.8" />
+      <module name="task-erver-backend" target="1.8" />
+      <module name="task-erver-frontend" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="config" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="group" options="-parameters" />
+      <module name="matiere" options="-parameters" />
+      <module name="task-erver-backend" options="-parameters" />
+      <module name="task-erver-frontend" options="-parameters" />
+      <module name="task-server" options="-parameters" />
+      <module name="user" options="-parameters" />
+    </option>
+  </component>
+</project>
