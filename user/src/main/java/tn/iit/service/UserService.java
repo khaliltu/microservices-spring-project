@@ -15,6 +15,10 @@ public class UserService {
 	
 	private final UserRepository userRepository;
 	
+	public Optional<User> getByMail(String mail){
+		return userRepository.findByMail(mail);
+	}
+	
 	public Optional<User> getById(Long id) {
 		return userRepository.findById(id);
 	}
