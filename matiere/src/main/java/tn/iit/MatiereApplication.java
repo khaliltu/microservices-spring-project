@@ -19,7 +19,7 @@ public class MatiereApplication {
 	public CorsConfigurationSource corsConfiguration() {
 	    CorsConfiguration corsConfig = new CorsConfiguration();
 	    corsConfig.applyPermitDefaultValues();
-	    corsConfig.addAllowedOrigin("http://localhost:3000/");
+	    corsConfig.addAllowedOrigin("http://localhost:3001/");
 	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    source.registerCorsConfiguration("/**", corsConfig);
 	    return source;

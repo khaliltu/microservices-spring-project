@@ -20,7 +20,7 @@ const Administrateur= () => {
         setModalOpen2(true);
       };
       const getUsersList = () => {
-        return fetch("http://localhost:9090/api-gateway/user-server/api/users" ,  
+        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres" ,  
         { headers: {
           'content-type': 'application/json'
         

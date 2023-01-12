@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import { FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput } from '@material-ui/core';
 import {  Visibility, VisibilityOff } from '@material-ui/icons';
 import Button from '@mui/material/Button';
+import services from '../services/services';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -86,13 +87,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const [email, setEmail] = useState();
+  const [mail, setEmail] = useState();
   const [password, setPassword] = useState();
 
 
   const [values, setValues] = useState({
 
-    email: '',
+    mail: '',
     password: '',
     showPassword: false,
   });
@@ -115,11 +116,11 @@ export default function Login() {
 
   //creer un nouveau fichier dans un package 'Services' qui contient les appels de ws
   const handleSubmit = async e => {
-    localStorage.setItem('access_token', 'test');
-     window.location.href = "/home" 
+   localStorage.setItem('access_token', 'test');
+     window.location.href = "/home"  
     e.preventDefault();
-   /*  const response = await auth.loginUser({
-      email,
+      /*const response = await services.loginUser({
+      mail,
       password
     });
     console.log(response.data);
