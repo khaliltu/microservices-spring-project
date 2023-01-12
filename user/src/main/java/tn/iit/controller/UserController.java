@@ -22,24 +22,24 @@ import tn.iit.service.UserService;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-	
+
 	private final UserService userService;
-	
+
 	@GetMapping
-	public List<User> getAll(){
+	public List<User> getAll() {
 		return userService.getAll();
 	}
-	
+
 	@GetMapping("/{id}")
-	public Optional<User> getById(@PathVariable Long id){
+	public Optional<User> getById(@PathVariable Long id) {
 		return userService.getById(id);
 	}
-	
+
 	@PostMapping
 	public User save(@RequestBody User user) {
 		return userService.save(user);
 	}
-	
+
 	@PutMapping
 	public ResponseEntity<User> update(@RequestBody User user) {
 		if (userService.getById(user.getId()).isPresent()) {
@@ -48,9 +48,10 @@ public class UserController {
 		}
 		return new ResponseEntity<>(HttpStatus.CONFLICT);
 	}
-	
+
 	@DeleteMapping
-	public ResponseEntity<Long> delete(@RequestBody Long id){
+	public ResponseEntity<Long> delete(@RequestBody User user) {
+		Long id = user.getId();
 		if (userService.getById(id).isPresent()) {
 			userService.deleteById(id);
 			return ResponseEntity.ok(id);
