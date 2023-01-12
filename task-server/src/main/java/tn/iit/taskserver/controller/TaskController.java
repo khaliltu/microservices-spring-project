@@ -10,6 +10,8 @@ import tn.iit.taskserver.service.TaskService;
 import java.util.List;
 import java.util.Optional;
 
+
+@CrossOrigin
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/tasks")

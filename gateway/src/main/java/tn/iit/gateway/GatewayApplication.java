@@ -19,7 +19,7 @@ public class GatewayApplication {
 	public CorsConfigurationSource corsConfiguration() {
 	    CorsConfiguration corsConfig = new CorsConfiguration();
 	    corsConfig.applyPermitDefaultValues();
-	    corsConfig.addAllowedOrigin("*");
+	    corsConfig.addAllowedOrigin("http://localhost:3000/");
 	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    source.registerCorsConfiguration("/**", corsConfig);
 	    return source;
