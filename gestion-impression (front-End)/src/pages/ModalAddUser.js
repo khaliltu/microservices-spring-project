@@ -132,7 +132,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
                         fullWidth
                         type={values.showPassword ? 'text' : 'password'}
 
-                        onChange={e => setPassword(e.target.value)}
+                        /*onChange={e => setPassword(e.target.value)}*/
 
                         endAdornment={
                         <InputAdornment position="end">

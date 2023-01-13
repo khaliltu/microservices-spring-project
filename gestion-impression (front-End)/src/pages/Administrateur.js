@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { tableTheme } from "../Views/table-theme";
 import ModalAddGroupe from "./ModalAddGroupe";
 import ModalAddUser from "./ModalAddUser";
-
+import React from "react";
+import axios from "axios";
 const Administrateur= () => {
     const [users, setUsers] = useState([]);
 
@@ -19,18 +20,15 @@ const Administrateur= () => {
         setmodaldata2(record);
         setModalOpen2(true);
       };
+
       const getUsersList = () => {
-        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres" ,  
-        { headers: {
-          'content-type': 'application/json'
-        
-        }})
+        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres")
           .then((response) => response.json())
           .then((actualData) => {
             console.log(actualData);
             setUsers(actualData.data);
           },
-          );
+          ).catch( () => console.log("error"));
           
       }
     useEffect(()=>{

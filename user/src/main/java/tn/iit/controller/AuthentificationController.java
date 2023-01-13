@@ -2,7 +2,6 @@ package tn.iit.controller;
 
 import java.util.Optional;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,7 @@ import tn.iit.entity.Login;
 import tn.iit.entity.User;
 import tn.iit.service.UserService;
 
-@CrossOrigin
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/home")
