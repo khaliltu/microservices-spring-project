@@ -1,11 +1,21 @@
-import { Button, Paper, Table, TableCell, TableContainer, TableHead, TableRow, ThemeProvider } from "@mui/material";
+import { Button, Paper,  Table, TableCell, tableCellClasses, TableContainer, TableHead, TableRow, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { tableTheme } from "../Views/table-theme";
 import ModalAddGroupe from "./ModalAddGroupe";
 import ModalAddUser from "./ModalAddUser";
 import React from "react";
-import axios from "axios";
+import {styled} from '@mui/material/styles';
+import { TableBody } from "@material-ui/core";
 const Administrateur= () => {
+    
+const StyledTableCell = styled(TableCell)(({}) => ({
+    [`&.${tableCellClasses.head}`]: {
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
     const [users, setUsers] = useState([]);
 
     const [modalOpen, setModalOpen] = useState(false);
@@ -22,11 +32,11 @@ const Administrateur= () => {
       };
 
       const getUsersList = () => {
-        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres")
+        return fetch("http://localhost:9090/api-gateway/user-server/api/users")
           .then((response) => response.json())
           .then((actualData) => {
             console.log(actualData);
-            setUsers(actualData.data);
+            setUsers(actualData);
           },
           ).catch( () => console.log("error"));
           
@@ -34,8 +44,13 @@ const Administrateur= () => {
     useEffect(()=>{
         getUsersList()
     
-    },[users])
-
+    },[])
+    useEffect(()=>{
+        const user = localStorage.getItem('user');
+    console.log(user)
+    
+    },[])
+   
     return(
         <div className="container">
             <div className="row">
@@ -62,30 +77,30 @@ const Administrateur= () => {
                 </div> <hr/>
                     <div className="row">
                         
-                        <Paper elevation={0}>
-                            <ThemeProvider theme={tableTheme}>
-                                <TableContainer elevation={0} component={Paper}>
-                                    <Table style={{paddingBottom: 50}}>
+                    <Paper elevation={0}>
+                                    <ThemeProvider theme={tableTheme}>
+                                        <TableContainer elevation={0} component={Paper}>
+                                            <Table size="small" aria-label="customized table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell>NOM</TableCell>
-                                                <TableCell>PRÉNOM</TableCell>
-                                                <TableCell>MAIL</TableCell>
+                                                <StyledTableCell>NOM</StyledTableCell>
+                                                <StyledTableCell>PRÉNOM</StyledTableCell>
+                                                <StyledTableCell>MAIL</StyledTableCell>
                                              
                                             </TableRow>
                                         </TableHead>
 
-                                        {/* <TableBody component={Paper}>
-                                            {users.map((user) => (
-                                                <TableRow key={menu.id} >
-                                                    <TableCell>{users.name}</TableCell>
-                                                    <TableCell>{users.lastName}</TableCell>
-                                                    <TableCell>{users.mail}</TableCell>
+                                         <TableBody component={Paper}>
+                                            {users && users.map((user) => (
+                                                <TableRow key={user.id} >
+                                                    <TableCell>{user.name}</TableCell>
+                                                    <TableCell>{user.lastName}</TableCell>
+                                                    <TableCell>{user.mail}</TableCell>
                                                   
                                                 </TableRow>
                                             ))}
 
-                                        </TableBody> */}
+                                        </TableBody> 
                                       
                                     </Table>
                                 </TableContainer>

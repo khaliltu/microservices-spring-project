@@ -1,6 +1,8 @@
 import { Close, Visibility, VisibilityOff } from "@material-ui/icons";
-import { Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, TextField, Typography } from "@mui/material";
+import { Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import swal from "sweetalert";
+import services from "../services/services";
 import "../Views/AddUser.css"
 
 function ModalAddUser({ details,setOpenModal,modaldata }) {
@@ -42,23 +44,32 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
     password: '',
     showPassword: false,
   });
+  const [lastName, setlastName] = useState();
+  const [password, setPassword] = useState();
+  const [role, setrole] = useState();
+  const [name, setname] = useState();
+  const [mail, setmail] = useState();
 
-
-/* 
-  const menuValide =async ()=> {
-    const response = await menusServices.validMenu({
-      menu_id
+  const handleSubmit = async e => {
+    
+    e.preventDefault();
+    
+    const response = await services.addUser({
+        lastName,
+        mail,
+        name,
+        password,
+        role
     });
-    console.log(response.data);
-    if ('message' in response) {
-         console.log("aa")
-
-    } else {
-      console.log("cc")
-
-    }
+    console.log(lastName,mail,name,password,role)
+    if ('id' in response) {
+         setOpenModal(false)
+         window.location.href = "/administrateur"
+             } 
+    else {
+      swal("Failed", response.message, "error");
+    } 
   }
- */
 
     return (
       <div className="modal display-block" style={{overflowY: "auto"}}
@@ -74,7 +85,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
    }}>
       <Close />
      </IconButton>
-     <form noValidate /* onSubmit={handleSubmit} */ style={{marginRight:"50px",marginLeft:"50px"}}>
+     <form noValidate  onSubmit={handleSubmit}  style={{marginRight:"50px",marginLeft:"50px"}}>
             <TextField
               //className={classes.form}
               variant="outlined"
@@ -83,7 +94,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
               id="Nom"
               name="Nom"
               label="Nom"
-            // onChange={e => setEmail(e.target.value)}
+             onChange={e => setname(e.target.value)}
             />
              
              <TextField
@@ -94,7 +105,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
               id="Prénom"
               name="Prénom"
               label="Prénom"
-            // onChange={e => setEmail(e.target.value)}
+            onChange={e => setlastName(e.target.value)}
             />
             <TextField
               //className={classes.form}
@@ -104,7 +115,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
               id="Mail"
               name="Mail"
               label="Mail"
-            // onChange={e => setEmail(e.target.value)}
+             onChange={e => setmail(e.target.value)}
             />
                     <TextField
                     margin="normal"
@@ -115,9 +126,10 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
                     select
                     defaultValue=""
                     helperText="Please select your role"
+                    onChange={e => setrole(e.target.value)}
         >
           {Roles.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem key={option.value} value={option.label}>
               {option.label}
             </MenuItem>
           ))}
@@ -132,7 +144,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
                         fullWidth
                         type={values.showPassword ? 'text' : 'password'}
 
-                        /*onChange={e => setPassword(e.target.value)}*/
+                        onChange={e => setPassword(e.target.value)}
 
                         endAdornment={
                         <InputAdornment position="end">
@@ -148,7 +160,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
                         }/>
                 </FormControl> <br></br><br></br>
                <div > 
-                    <Button  style={{backgroundColor:"#F4E1FA",color:'#B04CFE',marginLeft:"120px",marginRight:"50px",width:"200px"}}size="large" >
+                    <Button onClick={handleSubmit} style={{backgroundColor:"#F4E1FA",color:'#B04CFE',marginLeft:"120px",marginRight:"50px",width:"200px"}}size="large" >
                     Ajouter
                     </Button>
                     <Button style={{backgroundColor:"#F4E1FA",color:'#B04CFE',width:"200px"}}size="large" 

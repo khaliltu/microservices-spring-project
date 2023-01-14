@@ -6,12 +6,9 @@ import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import Badge from '@mui/material/Badge';
 import logo from '../images/logo.png'
-import swal from "sweetalert";
 import { Toolbar } from "@material-ui/core";
 
 const ResponsiveAppBar = () => {
-      const [setNom] = useState('');
-    const [prenom, setPrenom] = useState("");
     const [value, setValue] = useState(0);
     useEffect(() => {
         let path = window.location.pathname
@@ -23,7 +20,7 @@ const ResponsiveAppBar = () => {
 
     }, [value,]);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const token = localStorage.getItem('access_token');
+    //const token = localStorage.getItem('access_token');
 
     const handleUser = async () => {
     
@@ -55,9 +52,6 @@ const ResponsiveAppBar = () => {
     
 
     const settings = ['Deconnexion'];
-    const [badgeCounterUser, setbadgeCounterUser] = React.useState(0);
-    const [badgeCounterEvent, setbadgeCounterEvent] = React.useState(0);
-    const [badgeCounterMenu, setbadgeCounterMenu] = React.useState(0);
 
     useEffect(() => {
         getMenuEventNotif()
@@ -88,17 +82,17 @@ const ResponsiveAppBar = () => {
                              label="HOME" to='/home' component={Link}/>
 
                          <Tab style={{color: value === 1 ? "#B04CFE" : ""}}
-                             label={<Badge sx={{p: 0.7}} badgeContent={badgeCounterUser} color="error"
+                             label={<Badge sx={{p: 0.7}}  color="error"
                                            style={{transform: 'translate(2px, -0px)'}}> ADMINISTRATEUR </Badge>}
                              to='/administrateur' component={Link}/>
 
                         <Tab style={{color: value === 2 ? "#B04CFE" : ""}}
-                             label={<Badge sx={{p: 0.7}} badgeContent={badgeCounterMenu} color="error"
+                             label={<Badge sx={{p: 0.7}} color="error"
                                            style={{transform: 'translate(2px, -0px)'}}>AGANT </Badge>} to='/agent'
                              component={Link}/>
 
                         <Tab style={{color: value === 3 ? "#B04CFE" : ""}}
-                             label={<Badge sx={{p: 0.7}} badgeContent={badgeCounterEvent} color="error"
+                             label={<Badge sx={{p: 0.7}} color="error"
                                            style={{transform: 'translate(2px, -0px)'}}>ENSEINGANT </Badge>}
                              to='/enseignant' component={Link}/>
 
@@ -108,7 +102,7 @@ const ResponsiveAppBar = () => {
                     <Tooltip title="Open settings">
                         <IconButton onClick={handleOpenUserMenu}
                                     sx={{marginLeft: '1%', color: 'rgb(165, 157, 133)', backgroundColor: 'white'}}>
-                            <Avatar alt={prenom[0]} src="/static/images/avatar/2.jpg" sx={{marginRight: '300%'}}/>
+                            <Avatar src="/static/images/avatar/2.jpg" sx={{marginRight: '300%'}}/>
                         </IconButton>
                     </Tooltip>
                     <Menu

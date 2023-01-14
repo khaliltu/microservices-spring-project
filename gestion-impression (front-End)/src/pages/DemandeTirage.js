@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../Views/AddUser.css"
 import axios from 'axios';
 import blob from "blob";
-import { Button, IconButton, TextField, Typography } from "@mui/material";
+import { Button, IconButton, MenuItem, TextField, Typography } from "@mui/material";
 import { Close } from "@material-ui/icons";
 
 function DemandeTirage({ details,setOpenModal,modaldata }) {
@@ -27,7 +27,39 @@ function DemandeTirage({ details,setOpenModal,modaldata }) {
   };
 
 
+  const [matiers, setmatiers] = useState([]);
+  const [groups, setgroups] = useState([]);
 
+  const getmatiersList = async() => {
+    return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres")
+      .then((response) => response.json())
+      .then((actualData) => {
+        console.log(actualData);
+        setmatiers(actualData);
+      },
+      ).catch( () => console.log("error"));
+      
+  }
+
+const getgroupsList = async() => {
+  return fetch("http://localhost:9090/api-gateway/group-server/api/groups")
+    .then((response) => response.json())
+    .then((actualData) => {
+      console.log(actualData);
+      setgroups(actualData);
+    },
+    ).catch( () => console.log("error"));
+    
+}
+useEffect(()=>{
+getgroupsList()
+
+},[])
+
+useEffect(()=>{
+  getmatiersList()
+
+},[])
     return (
       <div className="modal display-block" style={{overflowY: "auto"}}
       onClick={() =>
@@ -52,12 +84,12 @@ function DemandeTirage({ details,setOpenModal,modaldata }) {
                     select
                     defaultValue=""
                     helperText="séléctionner la matière"
-                >{/* 
-                {Roles.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                >
+                {matiers.map((option) => (
+                    <MenuItem key={option.value} value={option.id}>
+                    {option.name}
                     </MenuItem>
-                ))} */}
+                ))}
                 </TextField>
                 <TextField
                     fullWidth
@@ -76,6 +108,8 @@ function DemandeTirage({ details,setOpenModal,modaldata }) {
               id="nombre_copy"
               name="nombre de copie"
               label="nombre de copie"
+              type="number"
+
             // onChange={e => setEmail(e.target.value)}
             />
              <TextField
@@ -88,9 +122,9 @@ function DemandeTirage({ details,setOpenModal,modaldata }) {
                     defaultValue=""
                     helperText="séléctionner la groupe"
         >{/* 
-          {Roles.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {groups.map((option) => (
+            <MenuItem key={option.value} value={option.id}>
+              {option.level}
             </MenuItem>
           ))} */}
         </TextField>

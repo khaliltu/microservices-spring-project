@@ -1,15 +1,19 @@
-import { Button, Paper, Table, TableCell, TableContainer, TableHead, TableRow, ThemeProvider } from "@mui/material";
-import { useState } from "react";
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, ThemeProvider } from "@mui/material";
+import { useEffect, useState } from "react";
 import { tableTheme } from "../Views/table-theme";
 import DemandeTirage from "./DemandeTirage";
 import ModalAddMatiere from "./ModaleAddMatiere";
 import React from "react"
 const Enseignant= () => {
-    
+    const user = localStorage.getItem('user');
+    console.log(user)
+  
     const [modalOpen, setModalOpen] = useState(false);
     const [modaldata, setmodaldata] = useState([]);
     const [modalOpen2, setModalOpen2] = useState(false);
     const [modaldata2, setmodaldata2] = useState([]);
+    const [matieres, setmatieres] = useState([]);
+
     const showModal = (record) => {
         setmodaldata(record);
         setModalOpen(true);
@@ -18,12 +22,25 @@ const Enseignant= () => {
         setmodaldata2(record);
         setModalOpen2(true);
       };
-
+      const getMatieresList = () => {
+        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres")
+          .then((response) => response.json())
+          .then((actualData) => {
+            console.log(actualData);
+            setmatieres(actualData);
+          },
+          ).catch( () => console.log("error"));
+          
+      }
+    useEffect(()=>{
+        getMatieresList()
+    
+    },[])
     return(
         <div className="container">
             <div className="row">
                 <div className="card py-lg-3">
-                    <h2></h2>
+                    
                     <hr/>
                     <div> 
                     <Button 
@@ -51,35 +68,20 @@ const Enseignant= () => {
                                             <TableRow>
                                                 <TableCell>MATIÈRE</TableCell>
                                                 <TableCell>ACTIONS</TableCell>
-                                                <TableCell></TableCell>
-                                                <TableCell></TableCell>
+                                           
                                              
                                             </TableRow>
                                         </TableHead>
 
-                                        {/* <TableBody component={Paper}>
-                                            {menus.map((menu) => (
-                                                <TableRow
-                                                    key={menu.id}
-                                                    onClick={() => showModal(menu)}>
-                                                    <TableCell>{menu.name}</TableCell>
-                                                    <TableCell>{menu.nom}</TableCell>
-                                                    <TableCell>{menu.prenom}</TableCell>
-                                                    <TableCell>{formatDate(menu.created_at)}</TableCell>
-                                                    {
-                                                        statusControls.map((x) => {
-                                                            if (x.menuStatus === menu.status_dev) {
-                                                                return (
-                                                                    <TableCell
-                                                                        style={{color: x.menuColor}}>{x.menuLabel}</TableCell>
-                                                                )
-                                                            }
-                                                        })
-                                                    }
-                                                </TableRow>
+                                        <TableBody component={Paper}>
+                                            {matieres && matieres .map((matiere) => (
+                                                <TableRow key={matiere.id}  >
+                                                    <TableCell>{matiere.name}</TableCell>
+                                                    <TableCell></TableCell>
+                                           </TableRow>
                                             ))}
 
-                                        </TableBody> */}
+                                        </TableBody> 
                                       
                                     </Table>
                                 </TableContainer>

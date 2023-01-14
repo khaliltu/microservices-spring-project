@@ -4,10 +4,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import swal from 'sweetalert';
-import { FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput } from '@material-ui/core';
+import { FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, Snackbar } from '@material-ui/core';
 import {  Visibility, VisibilityOff } from '@material-ui/icons';
 import Button from '@mui/material/Button';
 import services from '../services/services';
+import { Alert } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//creer un nouveau fichier dans un package Service qui contient les appels de ws
+
 
 export default function Login() {
   const classes = useStyles();
@@ -98,10 +99,6 @@ export default function Login() {
     showPassword: false,
   });
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -114,26 +111,34 @@ export default function Login() {
   };
 
 
-  //creer un nouveau fichier dans un package 'Services' qui contient les appels de ws
   const handleSubmit = async e => {
-   localStorage.setItem('access_token', 'test');
-     window.location.href = "/home"  
+    
     e.preventDefault();
-      /*const response = await services.loginUser({
+    try {   const response = await services.loginUser({
       mail,
       password
     });
-    console.log(response.data);
-    if ('access_token' in response) {
-
-          localStorage.setItem('access_token', response['access_token']);
-          window.location.href = "/dashboard";
-
-    } else {
-      swal("Failed", response.message, "error");
-    } */
+    console.log(response);
+    if ('id' in response) {
+          localStorage.setItem('user', response);
+          window.location.href = "/home"      } }
+          catch (err) {
+            console.log(err);
+            setOpen(true);
+        }
+     
   }
 
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = ( reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
 
   return (
@@ -155,7 +160,7 @@ export default function Login() {
             <TextField
               className={classes.form}
               variant="outlined"
-              margin="normal"
+              
               fullWidth
               id="Identifiant"
               name="Identifiant"
@@ -170,7 +175,7 @@ export default function Login() {
                 label="mot de passe "
 
                 id="outlined"
-                margin="normal"
+               
                 fullWidth
                 type={values.showPassword ? 'text' : 'password'}
 
@@ -197,8 +202,14 @@ export default function Login() {
               onClick={handleSubmit}>
                  Se connecter
                 </Button>
+                
                 </div>
           </form>
+          <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  mail ou mot de passe incorrecte
+                </Alert>
+              </Snackbar>
         </Grid>
       </Grid>
     </Grid>

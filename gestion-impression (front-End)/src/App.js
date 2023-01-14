@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import AppBarLogin from './asset/AppBarLogin';
 import Login from './pages/login';
@@ -7,9 +6,9 @@ import RoutesList from './Routes/routes';
 import React from "react"
 
 function App() {
-  const token = localStorage.getItem('access_token');
-  console.log(token)
-  if (!token) {
+  const user = localStorage.getItem('user');
+  console.log(user)
+  if (!user) {
       return (<div><AppBarLogin /><Login/></div>);
   }
   return (
