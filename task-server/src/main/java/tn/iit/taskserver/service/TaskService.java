@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import tn.iit.taskserver.entity.Task;
@@ -28,6 +30,12 @@ public class TaskService {
     }
 
 
+    public String saveTaskFile(MultipartFile multipartFile) {
+    	FileUploadService.saveFile(multipartFile);
+    	String documentUrl = "files/"+StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        return documentUrl;
+    }
+    
     public Task save(Task task) {
     	Date date = new Date();
     	task.setDateDepot(date);

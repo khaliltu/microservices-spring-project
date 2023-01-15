@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import tn.iit.entity.Matiere;
+import tn.iit.feign.UserFeignClient;
+import tn.iit.feign.proxy.User;
 import tn.iit.repository.MatiereRepository;
 
 @RequiredArgsConstructor
@@ -14,6 +16,7 @@ import tn.iit.repository.MatiereRepository;
 public class MatiereService {
 	
 	private final MatiereRepository matiereRepository;
+	private final UserFeignClient userFeignClient;
 	
 	public Optional<Matiere> getById(Long id) {
 		return matiereRepository.findById(id);
@@ -32,7 +35,13 @@ public class MatiereService {
 	}
 	
 	public Matiere save(Matiere matiere) {
-		return matiereRepository.save(matiere);
+		Optional<User> user = userFeignClient.getById(matiere.getIdProf());
+		if(user.isPresent()) {
+			return matiereRepository.save(matiere);
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public void deleteById(Long id) {
