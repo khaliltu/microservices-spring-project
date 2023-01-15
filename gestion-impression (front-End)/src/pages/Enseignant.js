@@ -10,7 +10,7 @@ const Enseignant= () => {
     const [modaldata, setmodaldata] = useState([]);
     const [modalOpen2, setModalOpen2] = useState(false);
     const [modaldata2, setmodaldata2] = useState([]);
-    const [matieres, setmatieres] = useState([]);
+    const [tasks, settasks] = useState([]);
 
     const showModal = (record) => {
         setmodaldata(record);
@@ -20,20 +20,30 @@ const Enseignant= () => {
         setmodaldata2(record);
         setModalOpen2(true);
       };
-      const getMatieresList = () => {
-        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres/profs/"+user.id)
+      const gettasksList = () => {
+        return fetch("http://localhost:9090/api-gateway/task-server/api/tasks/profs/"+user.id)
           .then((response) => response.json())
           .then((actualData) => {
             console.log(actualData);
-            setmatieres(actualData);
+            settasks(actualData);
           },
           ).catch( () => console.log("error"));
           
       }
     useEffect(()=>{
-        getMatieresList()
+        gettasksList()
     
     },[])
+    const formatDate = (date) => {
+        const d = new Date(date);
+        return (
+          ('0' + d.getDate()).slice(-2) +
+          '/' +
+          ('0' + (d.getMonth() + 1)).slice(-2) +
+          '/' +
+          d.getFullYear() 
+        );
+      }; 
     return(
         <div className="container">
             <div className="row">
@@ -64,18 +74,22 @@ const Enseignant= () => {
                                     <Table style={{paddingBottom: 50}}>
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell>MATIÈRE</TableCell>
-                                                <TableCell>ACTIONS</TableCell>
+                                                <TableCell>Nom du fichier</TableCell>
+                                                <TableCell>Nombre de copie</TableCell>
+                                                <TableCell>Date de depot</TableCell>
+                                                <TableCell>état</TableCell>
                                            
                                              
                                             </TableRow>
                                         </TableHead>
 
                                         <TableBody component={Paper}>
-                                            {matieres && matieres.map((matiere) => (
-                                                <TableRow key={matiere.id}  >
-                                                    <TableCell>{matiere.name}</TableCell>
-                                                    <TableCell></TableCell>
+                                            {tasks && tasks.map((task) => (
+                                                <TableRow key={task.id}  >
+                                                    <TableCell>{task.id}</TableCell>
+                                                    <TableCell>{task.nombreCopy}</TableCell>
+                                                    <TableCell>{formatDate(task.dateArrival)}</TableCell>
+                                                  <TableCell>  {(task.state).toString() === "false"? "en cours": "imprimé " } </TableCell>
                                            </TableRow>
                                             ))}
 

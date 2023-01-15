@@ -4,18 +4,24 @@ import axios from 'axios';
 import blob from "blob";
 import { Button, IconButton, MenuItem, TextField, Typography } from "@mui/material";
 import { Close } from "@material-ui/icons";
+import services from "../services/services";
+import swal from "sweetalert";
 
 function DemandeTirage({ details,setOpenModal,modaldata }) {
-  console.log(details);
-  useEffect(() => {
-   
-  }, [])
+  const user = JSON.parse(localStorage.getItem('user'));  
+
 
   const [selectedFile, setState] = useState(null);
-  
+  const [idProf, setIdProf]=useState(user.id)
+  const [dateArrival, setdateArrival]=useState()
+  const [nombreCopy, setnombreCopy]=useState()
+  const [document, setdocument]=useState() 
+  const [documentUrl, setdocumentUrl]=useState() 
+ const [idMatiere,setidMatiere]=useState()
+
    const onFileChange = (event) => {
     setState({ selectedFile: event.target.files[0] });
-  
+    setdocument(event.target.value)
   }; 
   
   // On file upload (click the upload button)
@@ -59,7 +65,29 @@ getgroupsList()
 useEffect(()=>{
   getmatiersList()
 
-},[])
+},[]) 
+const handleSubmit = async e => {
+    
+    e.preventDefault();
+    const response1= await services.addFile({
+      document
+    }) ;
+    if (response1 != "") {setdocumentUrl(response1)}
+    const response = await services.addTask({
+    dateArrival,
+    nombreCopy,
+    documentUrl,
+    idProf,
+    idMatiere
+   });
+      if ('id' in response) {
+        setOpenModal(false)
+        window.location.href = "/agent"
+            } 
+      else {
+      swal("Failed", response.message, "error");
+      }  
+      }
     return (
       <div className="modal display-block" style={{overflowY: "auto"}}
       onClick={() =>
@@ -84,6 +112,7 @@ useEffect(()=>{
                     select
                     defaultValue=""
                     helperText="séléctionner la matière"
+                    onChange={e => setidMatiere(e.target.value)}
                 >
                 {matiers.map((option) => (
                     <MenuItem key={option.value} value={option.id}>
@@ -99,6 +128,7 @@ useEffect(()=>{
                     InputLabelProps={{
                     shrink: true,
                     }}
+                    onChange={e => setdateArrival(e.target.value)}
                  />
                  <TextField
               //className={classes.form}
@@ -110,31 +140,17 @@ useEffect(()=>{
               label="nombre de copie"
               type="number"
 
-            // onChange={e => setEmail(e.target.value)}
+             onChange={e => setnombreCopy(e.target.value)}
             />
-             <TextField
-                    margin="normal"
-                    fullWidth
-                    id="Groupe"
-                    name="Groupe"
-                    label="Groupe"
-                    select
-                    defaultValue=""
-                    helperText="séléctionner la groupe"
-        >{/* 
-          {groups.map((option) => (
-            <MenuItem key={option.value} value={option.id}>
-              {option.level}
-            </MenuItem>
-          ))} */}
-        </TextField>
-        <Typography> <input type="file" onChange={onFileChange} /> </Typography> 
+              <Typography> <input type="file" 
+              onChange={ onFileChange} 
+              setdocumentUrl/> </Typography> 
             <Button  style={{backgroundColor:"#F4E1FA",color:'#B04CFE',marginTop:"10px",marginBottom:"20px"}}  size="small" onClick={onFileUpload}>
             télécharger
         </Button>
 
                <div > 
-                    <Button  style={{backgroundColor:"#F4E1FA",color:'#B04CFE',marginLeft:"120px",marginRight:"50px",width:"200px"}}size="large" >
+                    <Button onClick={handleSubmit}  style={{backgroundColor:"#F4E1FA",color:'#B04CFE',marginLeft:"120px",marginRight:"50px",width:"200px"}}size="large" >
                     Envoyer
                     </Button>
                     <Button style={{backgroundColor:"#F4E1FA",color:'#B04CFE',width:"200px"}}size="large" 

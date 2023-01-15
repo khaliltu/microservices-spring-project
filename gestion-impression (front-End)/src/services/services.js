@@ -45,5 +45,38 @@ async function addMatiere(credentials) {
     .then(data => data.json())
 }
 
+async function addFile(credentials) {
+  return fetch('http://localhost:9090/api-gateway/task-server/api/tasks/files', {
+    method: 'POST',
+    withCredentials: true,
 
-export default{loginUser,addUser,addGroupe,addMatiere}
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+}
+
+async function addTask(credentials) {
+  return fetch('http://localhost:9090/api-gateway/task-server/api/tasks', {
+    method: 'POST',
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+}
+
+async function changeState(credentials) {
+  return fetch('http://localhost:9090/api-gateway/task-server/api/tasks', {
+    method: 'PUT',
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+}
+
+export default{loginUser,addUser,addGroupe,addMatiere,addFile,addTask}

@@ -1,10 +1,37 @@
 import { Paper, Table, TableCell, TableContainer, TableHead, TableRow, ThemeProvider } from "@mui/material";
 import { tableTheme } from "../Views/table-theme";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Button, TableBody } from "@material-ui/core";
 const Agent= () => {
+    const [tasks, settasks] = useState([]);
+
+    const gettasksList = () => {
+        return fetch("http://localhost:9090/api-gateway/task-server/api/tasks")
+          .then((response) => response.json())
+          .then((actualData) => {
+            console.log(actualData);
+            settasks(actualData);
+          },
+          ).catch( () => console.log("error"));
+          
+      }
+      const changeState= ()=>{
+        
+      }
+    useEffect(()=>{
+        gettasksList()
     
-
-
+    },[])
+    const formatDate = (date) => {
+        const d = new Date(date);
+        return (
+          ('0' + d.getDate()).slice(-2) +
+          '/' +
+          ('0' + (d.getMonth() + 1)).slice(-2) +
+          '/' +
+          d.getFullYear() 
+        );
+      };
     return(
         <div className="container">
             <div className="row">
@@ -19,38 +46,27 @@ const Agent= () => {
                                     <Table style={{paddingBottom: 50}}>
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell>ENSEIGNGANT</TableCell>
-                                                <TableCell>DOCUMENT</TableCell>
-                                                <TableCell>NOMBRE DE COPIE</TableCell>
-                                                <TableCell>DATE</TableCell>
-                                                <TableCell>ACTIONS</TableCell>
+                                                <TableCell>Document</TableCell>
+                                                <TableCell>Nombre de copie</TableCell>
+                                                <TableCell>Date de dépôt </TableCell>
+                                                <TableCell>Date d'arrivée </TableCell>
+                                                <TableCell>Etat</TableCell>
                                              
                                             </TableRow>
                                         </TableHead>
 
-                                        {/* <TableBody component={Paper}>
-                                            {menus.map((menu) => (
-                                                <TableRow
-                                                    key={menu.id}
-                                                    onClick={() => showModal(menu)}>
-                                                    <TableCell>{menu.name}</TableCell>
-                                                    <TableCell>{menu.nom}</TableCell>
-                                                    <TableCell>{menu.prenom}</TableCell>
-                                                    <TableCell>{formatDate(menu.created_at)}</TableCell>
-                                                    {
-                                                        statusControls.map((x) => {
-                                                            if (x.menuStatus === menu.status_dev) {
-                                                                return (
-                                                                    <TableCell
-                                                                        style={{color: x.menuColor}}>{x.menuLabel}</TableCell>
-                                                                )
-                                                            }
-                                                        })
-                                                    }
-                                                </TableRow>
+                                         <TableBody component={Paper}>
+                                         {tasks && tasks.map((task) => (
+                                                <TableRow key={task.id}  >
+                                                    <TableCell>{task.id}</TableCell>
+                                                    <TableCell>{task.nombreCopy}</TableCell>
+                                                    <TableCell>{formatDate(task.dateDepot)}</TableCell>
+                                                    <TableCell>{formatDate(task.dateArrival)}</TableCell>
+                                                  <TableCell>  {(task.state).toString() === "false"? "en cours": "imprimé " } <Button onClick={changeState()}>imprimer</Button></TableCell>
+                                           </TableRow>
                                             ))}
 
-                                        </TableBody> */}
+                                        </TableBody>
                                       
                                     </Table>
                                 </TableContainer>
