@@ -93,8 +93,8 @@ const StyledTableCell = styled(TableCell)(({}) => ({
                                          <TableBody component={Paper}>
                                             {users && users.map((user) => (
                                                 <TableRow key={user.id} >
-                                                    <TableCell>{user.name}</TableCell>
                                                     <TableCell>{user.lastName}</TableCell>
+                                                    <TableCell>{user.name}</TableCell>
                                                     <TableCell>{user.mail}</TableCell>
                                                   
                                                 </TableRow>

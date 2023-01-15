@@ -120,7 +120,7 @@ export default function Login() {
     });
     console.log(response);
     if ('id' in response) {
-          localStorage.setItem('user', response);
+          localStorage.setItem('user', JSON.stringify(response));
           window.location.href = "/home"      } }
           catch (err) {
             console.log(err);

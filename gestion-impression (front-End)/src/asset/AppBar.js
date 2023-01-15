@@ -8,7 +8,10 @@ import Badge from '@mui/material/Badge';
 import logo from '../images/logo.png'
 import { Toolbar } from "@material-ui/core";
 
+
 const ResponsiveAppBar = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const role = user.role;
     const [value, setValue] = useState(0);
     useEffect(() => {
         let path = window.location.pathname
@@ -63,6 +66,7 @@ const ResponsiveAppBar = () => {
         boxShadow: "none", width: '100%', height: '50%', paddingLeft: '2%',
     };
     return (
+        <>
         <React.Fragment>
             <AppBar elevation={0}>
                 <Toolbar style={toolbarStyle}>
@@ -81,20 +85,20 @@ const ResponsiveAppBar = () => {
                         <Tab style={{color: value === 0 ? "#B04CFE" : ""}}
                              label="HOME" to='/home' component={Link}/>
 
-                         <Tab style={{color: value === 1 ? "#B04CFE" : ""}}
+                        {role==="ADMIN" && <Tab style={{color: value === 1 ? "#B04CFE" : ""}}
                              label={<Badge sx={{p: 0.7}}  color="error"
                                            style={{transform: 'translate(2px, -0px)'}}> ADMINISTRATEUR </Badge>}
-                             to='/administrateur' component={Link}/>
+                             to='/administrateur' component={Link}/> }
 
-                        <Tab style={{color: value === 2 ? "#B04CFE" : ""}}
+                        {role!="PROFESSOR" && <Tab style={{color: value === 2 ? "#B04CFE" : ""}}
                              label={<Badge sx={{p: 0.7}} color="error"
-                                           style={{transform: 'translate(2px, -0px)'}}>AGANT </Badge>} to='/agent'
-                             component={Link}/>
+                                           style={{transform: 'translate(2px, -0px)'}}>AGENT </Badge>} to='/agent'
+                             component={Link}/>}
 
-                        <Tab style={{color: value === 3 ? "#B04CFE" : ""}}
+                        {role==="PROFESSOR" && <Tab style={{color: value === 3 ? "#B04CFE" : ""}}
                              label={<Badge sx={{p: 0.7}} color="error"
                                            style={{transform: 'translate(2px, -0px)'}}>ENSEINGANT </Badge>}
-                             to='/enseignant' component={Link}/>
+                             to='/enseignant' component={Link}/> }
 
                     </Tabs>
 
@@ -132,6 +136,7 @@ const ResponsiveAppBar = () => {
                 </Toolbar>
             </AppBar>
         </React.Fragment>
+        </>
     )
 }
 

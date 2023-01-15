@@ -5,9 +5,7 @@ import DemandeTirage from "./DemandeTirage";
 import ModalAddMatiere from "./ModaleAddMatiere";
 import React from "react"
 const Enseignant= () => {
-    const user = localStorage.getItem('user');
-    console.log(user)
-  
+    const user = JSON.parse(localStorage.getItem('user'));  
     const [modalOpen, setModalOpen] = useState(false);
     const [modaldata, setmodaldata] = useState([]);
     const [modalOpen2, setModalOpen2] = useState(false);
@@ -23,7 +21,7 @@ const Enseignant= () => {
         setModalOpen2(true);
       };
       const getMatieresList = () => {
-        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres")
+        return fetch("http://localhost:9090/api-gateway/matiere-server/api/matieres/profs/"+user.id)
           .then((response) => response.json())
           .then((actualData) => {
             console.log(actualData);
@@ -74,7 +72,7 @@ const Enseignant= () => {
                                         </TableHead>
 
                                         <TableBody component={Paper}>
-                                            {matieres && matieres .map((matiere) => (
+                                            {matieres && matieres.map((matiere) => (
                                                 <TableRow key={matiere.id}  >
                                                     <TableCell>{matiere.name}</TableCell>
                                                     <TableCell></TableCell>

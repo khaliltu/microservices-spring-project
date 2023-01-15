@@ -94,7 +94,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
               id="Nom"
               name="Nom"
               label="Nom"
-             onChange={e => setname(e.target.value)}
+             onChange={e => setlastName(e.target.value)}
             />
              
              <TextField
@@ -105,7 +105,7 @@ function ModalAddUser({ details,setOpenModal,modaldata }) {
               id="Prénom"
               name="Prénom"
               label="Prénom"
-            onChange={e => setlastName(e.target.value)}
+            onChange={e => setname(e.target.value)}
             />
             <TextField
               //className={classes.form}
